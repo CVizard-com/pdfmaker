@@ -1,8 +1,8 @@
-package com.cvizard.pdfcreator.controllers;
+package com.cvizard.pdfcreator.controller;
 
-import com.cvizard.pdfcreator.models.Resume;
-import com.cvizard.pdfcreator.repositories.ResumeRepository;
-import com.cvizard.pdfcreator.services.ResumeService;
+import com.cvizard.pdfcreator.model.Resume;
+import com.cvizard.pdfcreator.repository.ResumeRepository;
+import com.cvizard.pdfcreator.service.ResumeService;
 import com.itextpdf.text.DocumentException;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/creator")
@@ -31,7 +30,7 @@ public class ResumeController {
         //TODO return list of templates with logo
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(name = "/download",produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<Resource> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException {
         Resume resume = resumeRepository.findById(key).orElseThrow();
         resumeService.createPdf(key, resume);
@@ -39,12 +38,4 @@ public class ResumeController {
         Resource resource = new FileSystemResource(file);
         return ResponseEntity.ok().body(resource);
     }
-
-    @GetMapping("/test")
-    public HashMap<String, String> testGet() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("test", "test");
-        return map;
-    }
-
 }
