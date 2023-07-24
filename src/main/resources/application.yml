@@ -5,9 +5,9 @@ spring:
     bootstrap-servers: "kafka:29092"
   data:
     mongodb:
-      host:
-      port:
-      username:
-      password:
-      database:
-      authentication-database:
+      host: "localhost"
+      port: 27017
+      username: "root"
+      password: "example"
+      database: "cvizard"
+      authentication-database: "admin"
