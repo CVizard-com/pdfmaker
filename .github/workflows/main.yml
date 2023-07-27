@@ -73,4 +73,4 @@ jobs:
           script: |
             docker login cvizard.com:5001 -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             sed -i 's|cvizard.com:5001/pdfmaker:.*|cvizard.com:5001/pdfmaker:${{ github.sha }}|' CVizard/docker-compose.yml
-            cd CVizard && docker compose down && docker compose build && docker compose up -d
+            cd CVizard && docker compose stop pdfmaker && docker compose build pdfmaker && docker compose up -d pdfmaker
