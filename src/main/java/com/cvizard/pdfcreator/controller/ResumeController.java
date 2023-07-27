@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/creator")
+@RequestMapping("/api/maker")
 @AllArgsConstructor
 public class ResumeController {
 
