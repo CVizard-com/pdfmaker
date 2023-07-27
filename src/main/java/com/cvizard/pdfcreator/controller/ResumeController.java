@@ -35,6 +35,7 @@ public class ResumeController {
 
     @GetMapping(path = "/download",produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException {
+        System.out.println(key);
         Resume resume = resumeRepository.findById(key)
                 .orElseThrow(() ->new ResponseStatusException(HttpStatus.FORBIDDEN,"CV is processing"));
 
