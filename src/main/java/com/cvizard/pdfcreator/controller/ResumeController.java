@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
@@ -44,5 +41,11 @@ public class ResumeController {
         Resource resource = new FileSystemResource(file);
         return ResponseEntity.ok().body(resource);
 
+    }
+    @GetMapping("/db/{id}")
+    public void getResumeFromDb(@PathVariable(name = "id") String id){
+        System.out.println(resumeRepository.findAll());
+        System.out.println("--------------");
+        System.out.println(resumeRepository.findById(id));
     }
 }

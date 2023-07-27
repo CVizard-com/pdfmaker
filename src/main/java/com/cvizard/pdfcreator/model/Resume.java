@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Data
 @Document("cvizard")
 public class Resume {
-    @Id
+    @MongoId
     private String id;
     private List<Work> work;
     private List<Education> education;
