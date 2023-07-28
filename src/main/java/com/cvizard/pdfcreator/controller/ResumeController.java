@@ -33,10 +33,10 @@ public class ResumeController {
     @GetMapping(path = "/download",produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException {
         System.out.println(key);
-        Resume resume = resumeRepository.findById(key)
-                .orElseThrow(() ->new ResponseStatusException(HttpStatus.FORBIDDEN,"CV is processing"));
+//        Resume resume = resumeRepository.findById(key)
+//                .orElseThrow(() ->new ResponseStatusException(HttpStatus.FORBIDDEN,"CV is processing"));
 
-        resumeService.createPdf(key, resume);
+//        resumeService.createPdf(key, resume);
 //        File file = new File("resources/" + key + ".pdf");
         File file = new File("resources/mocked/cv.pdf");
         Resource resource = new FileSystemResource(file);
