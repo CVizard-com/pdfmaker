@@ -37,7 +37,8 @@ public class ResumeController {
                 .orElseThrow(() ->new ResponseStatusException(HttpStatus.FORBIDDEN,"CV is processing"));
 
         resumeService.createPdf(key, resume);
-        File file = new File("resources/" + key + ".pdf");
+//        File file = new File("resources/" + key + ".pdf");
+        File file = new File("resources/mocked/cv.pdf");
         Resource resource = new FileSystemResource(file);
         return ResponseEntity.ok().body(resource);
 
