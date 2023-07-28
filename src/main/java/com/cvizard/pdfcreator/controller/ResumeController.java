@@ -32,8 +32,8 @@ public class ResumeController {
 
     @GetMapping(name = "/download",produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<Resource> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException {
-        Resume resume = resumeRepository.findById(key).orElseThrow();
-        resumeService.createPdf(key, resume);
+//        Resume resume = resumeRepository.findById(key).orElseThrow();
+//        resumeService.createPdf(key, resume);
 //        File file = new File("resources/" + key + ".pdf");
         File file = new File("resources/mocked/cv.pdf");
         Resource resource = new FileSystemResource(file);
