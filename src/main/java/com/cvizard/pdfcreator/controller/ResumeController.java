@@ -38,7 +38,7 @@ public class ResumeController {
 
 //        resumeService.createPdf(key, resume);
 //        File file = new File("resources/" + key + ".pdf");
-        File file = new File("resources/mocked/cv.pdf");
+        File file = new File("resources/cv.pdf");
         Resource resource = new FileSystemResource(file);
         return ResponseEntity.ok().body(resource);
 
