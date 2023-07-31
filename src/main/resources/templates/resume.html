@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            /* margin: 20px; */
         }
 
         h1 {
@@ -25,7 +25,6 @@
             width: 100%;
             list-style-type: none;
         }
-
         ul li:before {
             content: "\2022";
             color: #0066cc;
@@ -40,7 +39,6 @@
             width: 25%;
             float: left;
         }
-
         .date {
             font-weight: bold;
             color: #0066cc;
@@ -49,31 +47,31 @@
             margin-left: 20px;
             padding-left: 5px;
         }
-
         .title {
             color: grey;
             font-size: 150%;
         }
-
         .name {
             font-weight: bold;
             display: inline-flex;
+            flex-wrap: wrap;
         }
-
         .info {
             display: inline-flex;
             flex-direction: column;
+            flex-wrap: wrap;
         }
-
         .summary {
             color: grey;
             font-size: 90%;
+            display: inline-flex;
+            flex-wrap: wrap;
         }
-
         div {
             margin-bottom: 2px;
-            word-wrap: break-word;
+
             display: inline-flex;
+            vertical-align: top;
         }
     </style>
 </head>
