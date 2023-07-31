@@ -1,58 +1,123 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #0066cc;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        ul {
+            margin: 5px 0;
+            padding-left: 20px;
+            width: 100%;
+            list-style-type: none;
+        }
+
+        ul li:before {
+            content: "\2022";
+            color: #0066cc;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        li {
+            margin: 3px;
+            width: 25%;
+            float: left;
+        }
+
+        .date {
+            font-weight: bold;
+            color: #0066cc;
+            display: inline-block;
+            width: 220px;
+            margin-left: 20px;
+            padding-left: 5px;
+        }
+
+        .title {
+            color: grey;
+            font-size: 150%;
+        }
+
+        .name {
+            font-weight: bold;
+            display: inline;
+        }
+
+        .info {
+            display: inline-flex;
+            flex-direction: column;
+        }
+
+        .summary {
+            color: grey;
+            font-size: 90%;
+        }
+
+        div {
+            margin-bottom: 2px;
+        }
+    </style>
 </head>
 <body>
-<h1>Work Experience</h1>
+<h1>CV - Bluesoft</h1>
+
+<h2 class="title">Experience</h2>
 <div th:each="work : ${resume.work}">
-    <h6 th:text="${work.name}"></h6>
-    <p th:text="${work.position}"></p>
-    <p th:text="${work.startDate} + ' - ' + ${work.endDate}"></p>
-    <p th:text="${work.summary}"></p>
+    <div class="date" th:text="${work.startDate} + ' - ' + ${work.endDate}"></div>
+    <div class="info">
+        <div class="name" th:text="${work.position}, ${work.name}"></div>
+        <div class="summary" th:text="${work.summary}"></div>
+    </div>
 </div>
 
-<h1>Education</h1>
+<h2 class="title">Education</h2>
 <div th:each="education : ${resume.education}">
-    <h6 th:text="${education.institution}"></h6>
-    <p th:text="${education.area}"></p>
-    <p th:text="${education.studyType}"></p>
-    <p th:text="${education.startDate} + ' - ' + ${education.endDate}"></p>
+    <div class="date" th:text="${education.startDate} + ' - ' + ${education.endDate}"></div>
+    <div class="info">
+        <div class="name" th:text="${education.institution}"></div>
+        <div class="summary" th:text="${education.studyType}"></div>
+    </div>
 </div>
 
-<h1>Certificates</h1>
-<div th:each="certificate : ${resume.certificates}">
-    <h6 th:text="${certificate.name}"></h6>
-    <p th:text="${certificate.date}"></p>
-    <p th:text="${certificate.issuer}"></p>
+<h2 class="title">Projects</h2>
+<div th:each="project : ${resume.projects}">
+    <div class="date" th:text="${project.startDate} + ' - ' + ${project.endDate}"></div>
+    <div class="info">
+        <div class="name" th:text="${project.name}"></div>
+        <div class="summary" th:text="${project.summary}"></div>
+    </div>
 </div>
+<h2 class="title">Certificates</h2>
+<div th:each="certificate : ${resume.certificates}">
+    <div class="date" th:text="${certificate.date}"></div>
+    <div class="info">
+        <div class="name" th:text="${certificate.name}"></div>
+        <div class="summary" th:text="${certificate.issuer}"></div>
+    </div>
+</div>
+
 
 <h1>Skills</h1>
-<div th:each="skill : ${resume.skills}">
-    <p th:text="${skill.name}"></p>
-    <p th:text="${skill.level}"></p>
-    <p th:each="keyword : ${skill.keywords}" th:text="${keyword}"></p>
-</div>
+<ul th:each="skill : ${resume.skills}">
+    <li th:text="${skill.name}"></li>
+</ul>
 
-<h1>Languages</h1>
-<div th:each="language : ${resume.languages}">
-    <p th:text="${language.language}"></p>
-    <p th:text="${language.level}"></p>
-</div>
-
-<h1>Projects</h1>
-<div th:each="project : ${resume.projects}">
-    <p th:text="${project.name}"></p>
-    <p th:text="${project.summary}"></p>
-    <p th:text="${project.startDate} + ' - ' + ${project.endDate}"></p>
-</div>
-
-
-<h1>Interests</h1>
-<div th:each="interests : ${resume.interests}">
-    <h6 th:text="${interests.name}"></h6>
-    <p th:each="keyword : ${interests.keywords}" th:text="${keyword}"></p>
-</div>
 </body>
 </html>
