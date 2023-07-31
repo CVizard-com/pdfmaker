@@ -82,7 +82,7 @@
 <div th:each="work : ${resume.work}">
     <div class="date" th:text="${work.startDate} + ' - ' + ${work.endDate}"></div>
     <div class="info">
-        <div class="name" th:text="${work.position}, ${work.name}"></div>
+        <div class="name" th:text="${work.position} + ', ' + ${work.name}"></div>
         <div class="summary" th:text="${work.summary}"></div>
     </div>
 </div>
