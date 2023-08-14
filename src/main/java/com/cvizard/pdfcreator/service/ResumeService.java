@@ -23,7 +23,6 @@ public class ResumeService {
         context.setVariable("resume",resume);
         String processed = templateEngine.process("resume", context);
         renderer.setDocumentFromString(processed);
-        renderer.setPDFPageSize(new Rectangle(842, 595));
         renderer.layout();
 
         try (FileOutputStream fos = new FileOutputStream("resources/"+key+".pdf")) {
