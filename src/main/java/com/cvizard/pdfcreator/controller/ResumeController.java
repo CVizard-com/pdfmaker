@@ -32,7 +32,6 @@ public class ResumeController {
 
     @GetMapping(path = "/download",produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException {
-        System.out.println(key);
         Resume resume = resumeRepository.findById(key)
                 .orElseThrow(() ->new ResponseStatusException(HttpStatus.FORBIDDEN,"CV is processing"));
 
@@ -47,5 +46,13 @@ public class ResumeController {
         System.out.println(resumeRepository.findAll());
         System.out.println("--------------");
         System.out.println(resumeRepository.findById(id));
+    }
+    @GetMapping(path="/test",produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<?> test() throws DocumentException, IOException {
+        String key = "test";
+        resumeService.createPdf("test", new Resume());
+        File file = new File("resources/" + key + ".pdf");
+        Resource resource = new FileSystemResource(file);
+        return ResponseEntity.ok().body(resource);
     }
 }
