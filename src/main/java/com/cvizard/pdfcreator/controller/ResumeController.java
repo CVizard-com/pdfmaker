@@ -25,11 +25,6 @@ public class ResumeController {
     private final ResumeRepository resumeRepository;
     private final ResumeService resumeService;
 
-    @GetMapping("/templates")
-    public void getResumeTemplates() {
-        //TODO return list of templates with logo
-    }
-
     @GetMapping(path = "/download",produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException {
         Resume resume = resumeRepository.findById(key)
@@ -40,19 +35,5 @@ public class ResumeController {
         Resource resource = new FileSystemResource(file);
         return ResponseEntity.ok().body(resource);
 
-    }
-    @GetMapping("/db/{id}")
-    public void getResumeFromDb(@PathVariable(name = "id") String id){
-        System.out.println(resumeRepository.findAll());
-        System.out.println("--------------");
-        System.out.println(resumeRepository.findById(id));
-    }
-    @GetMapping(path="/test",produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<?> test() throws DocumentException, IOException {
-        String key = "test";
-        resumeService.createPdf("test", new Resume());
-        File file = new File("resources/" + key + ".pdf");
-        Resource resource = new FileSystemResource(file);
-        return ResponseEntity.ok().body(resource);
     }
 }
