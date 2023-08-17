@@ -40,7 +40,7 @@ public class ResumeService {
         Document document = new Document(pdfDoc);
 
         int numberOfPages = pdfDoc.getNumberOfPages();
-        Image img = new Image(ImageDataFactory.create("target/classes/static/logo.png"));
+        Image img = new Image(ImageDataFactory.create("logo.png"));
         for (int i = 1; i <= numberOfPages; i++) {
             img.setFixedPosition(i, 420, 735);
             document.add(img);
