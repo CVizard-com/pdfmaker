@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("/api/maker")
@@ -26,7 +27,7 @@ public class ResumeController {
     private final ResumeService resumeService;
 
     @GetMapping(path = "/download",produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<?> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException {
+    public ResponseEntity<?> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException, URISyntaxException {
         Resume resume = resumeRepository.findById(key)
                 .orElseThrow(() ->new ResponseStatusException(HttpStatus.FORBIDDEN,"CV is processing"));
 
