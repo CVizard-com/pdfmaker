@@ -1,6 +1,12 @@
 package com.cvizard.pdfcreator.service;
 
 import com.cvizard.pdfcreator.model.Resume;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.text.DocumentException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,9 +31,22 @@ public class ResumeService {
         renderer.setDocumentFromString(processed);
         renderer.layout();
 
-        try (FileOutputStream fos = new FileOutputStream("resources/"+key+".pdf")) {
+        try (FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf")) {
             renderer.createPDF(fos);
         }
+        String source = "resources/"+key+"-logo.pdf";
+        String destination = "resources/"+key+".pdf";
+        PdfDocument pdfDoc = new PdfDocument(new PdfReader(source), new PdfWriter(destination));
+        Document document = new Document(pdfDoc);
+
+        int numberOfPages = pdfDoc.getNumberOfPages();
+        Image img = new Image(ImageDataFactory.create("src/main/resources/static/logo.png"));
+        for (int i = 1; i <= numberOfPages; i++) {
+            img.setFixedPosition(i, 420, 735);
+            document.add(img);
+        }
+
+        document.close();
     }
 
 }

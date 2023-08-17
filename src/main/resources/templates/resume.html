@@ -42,18 +42,10 @@
       }
 
       .page {
-        width: 595px;
-        height: 842px;
         margin: auto;
         background-color: white;
         box-sizing: border-box;
-        padding: 0.3in;
-      }
 
-      .logo {
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
       }
 
       .date {
@@ -79,40 +71,52 @@
         color: grey;
         font-size: 90%;
       }
-      .logo {
-        width: 100%;
-        height: 120px;
-      }
-
-      .logoText, .logoImage {
-        width: 50%;
-        height: 100%;
-        float: left;
-      }
-
-      .logoText h1{
-        margin-top: 50px;
-        font-size: 200%;
-      }
-      .logoImage{
-        text-align: right;
-      }
 
       div {
         margin-bottom: 8px;
+      }
+
+      @page  {
+          padding-top: 69px;
+        size: A4;
+          margin: 80px;
+          @bottom-left{
+              content: "Bluesoft Sp. z o.o. Aleje_Jerozolimskie 134 02-305 Warszawa";
+              color: gray;
+              font-family: Tahoma,sans-serif;
+              padding-left: 50px;
+              padding-bottom: 120px;
+              font-size: 84%;
+          }
+          @bottom-center {
+              content: "+48 22 37 37 000 info@bluesoft.com www.bluesoft.com";
+              color: gray;
+              font-family: Tahoma,sans-serif;
+              padding-bottom: 120px;
+              font-size: 84%;
+
+          }
+          @bottom-right {
+              content: "KRS 0000138707 NIP: 5262667699";
+              color: gray;
+              font-family: Tahoma,sans-serif;
+              padding-right: 100px;
+              padding-bottom: 120px;
+              font-size: 84%;
+
+          }
+          @bottom-right-corner {
+              content: counter(page);
+              color: gray;
+              font-family: Tahoma,sans-serif;
+              font-weight: bold;
+          }
       }
     </style>
   </head>
   <body>
 
     <div class="page">
-      <div class="logo">
-        <div class="logoText"><h1>CV - Bluesoft</h1></div>
-        <div class="logoImage"><img th:src="@{https://bluesoft.com/logo.png}" alt="logo" height="100%" width="auto"/></div>
-
-      </div>
-
-
       <h2 class="title">Experience</h2>
       <div th:each="work : ${resume.work}">
         <div
