@@ -13,5 +13,4 @@ WORKDIR /app
 COPY --from=build /app/target/pdfmaker.jar .
 COPY  --from=build /app/resources ./resources
 RUN mkdir -p resources
-EXPOSE 8084:8084
 CMD ["java", "-jar", "pdfmaker.jar"]
