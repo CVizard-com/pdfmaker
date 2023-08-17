@@ -44,9 +44,9 @@ public class ResumeService {
 
         int numberOfPages = pdfDoc.getNumberOfPages();
 
-        URL resource = getClass().getClassLoader().getResource("resources/logo.png");
-        File file = new File(resource.toURI());
-        Image img = new Image(ImageDataFactory.create(file.getAbsolutePath()));
+//        URL resource = getClass().getClassLoader().getResource("resources/logo.png");
+//        File file = new File(resource.toURI());
+        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
         for (int i = 1; i <= numberOfPages; i++) {
             img.setFixedPosition(i, 420, 735);
             document.add(img);
