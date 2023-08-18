@@ -117,7 +117,7 @@
   <body>
 
     <div class="page">
-      <h2 class="title">Work experience</h2>
+      <h2 class="title">Doświadczenie zawodowe</h2>
       <div th:each="work : ${resume.work}">
         <div
           class="date"
@@ -132,7 +132,7 @@
         </div>
       </div>
 
-      <h2 class="title">Education</h2>
+      <h2 class="title">Wykształcenie</h2>
       <div th:each="education : ${resume.education}">
         <div
           class="date"
@@ -144,7 +144,7 @@
         </div>
       </div>
 
-      <h2 class="title">Projects</h2>
+      <h2 class="title">Projekty</h2>
       <div th:each="project : ${resume.projects}">
         <div
           class="date"
@@ -155,7 +155,7 @@
           <div class="summary" th:text="${project.summary}"></div>
         </div>
       </div>
-      <h2 class="title">Certificates</h2>
+      <h2 class="title">Certyfikaty</h2>
       <div th:each="certificate : ${resume.certificates}">
         <div class="date" th:text="${certificate.date}"></div>
         <div class="info">
@@ -163,7 +163,7 @@
           <div class="summary" th:text="${certificate.issuer}"></div>
         </div>
       </div>
-      <h2 class="title">Languages</h2>
+      <h2 class="title">Znajomość języków</h2>
       <div th:each="language : ${resume.languages}">
         <div class="date" th:text="${language.language}"></div>
         <div class="info">
@@ -172,7 +172,7 @@
         </div>
       </div>
 
-      <h2 class="title">Skills</h2>
+      <h2 class="title">Umiejętności</h2>
       <ul th:each="skill : ${resume.skills}">
         <li th:text="${skill.name}"></li>
       </ul>
