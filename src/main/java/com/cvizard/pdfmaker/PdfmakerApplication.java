@@ -1,13 +1,13 @@
-package com.cvizard.pdfcreator;
+package com.cvizard.pdfmaker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PdfcreatorApplication {
+public class PdfmakerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PdfcreatorApplication.class, args);
+        SpringApplication.run(PdfmakerApplication.class, args);
     }
 
 }

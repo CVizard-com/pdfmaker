@@ -1,6 +1,6 @@
-package com.cvizard.pdfcreator.service;
+package com.cvizard.pdfmaker.service;
 
-import com.cvizard.pdfcreator.model.Resume;
+import com.cvizard.pdfmaker.model.Resume;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
@@ -17,7 +17,6 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import java.io.*;
 import java.io.FileOutputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 @Service
 @AllArgsConstructor
@@ -27,32 +26,30 @@ public class ResumeService {
     private final ITextRenderer renderer = new ITextRenderer();
     private final Context context = new Context();
 
-    public void createPdf(String key, Resume resume) throws IOException, DocumentException, URISyntaxException {
+    public void createPdf(String key, Resume resume) throws IOException, DocumentException {
+        FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf");
+        String processed = templateEngine.process("resume", context);
+        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
 
         context.setVariable("resume",resume);
-        String processed = templateEngine.process("resume", context);
         renderer.setDocumentFromString(processed);
         renderer.layout();
+        renderer.createPDF(fos);
 
-        try (FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf")) {
-            renderer.createPDF(fos);
-        }
-        String source = "resources/"+key+"-logo.pdf";
-        String destination = "resources/"+key+".pdf";
-        PdfDocument pdfDoc = new PdfDocument(new PdfReader(source), new PdfWriter(destination));
+        PdfDocument pdfDoc =
+                new PdfDocument(
+                        new PdfReader("resources/"+key+"-logo.pdf"),
+                        new PdfWriter("resources/"+key+".pdf")
+                );
         Document document = new Document(pdfDoc);
 
         int numberOfPages = pdfDoc.getNumberOfPages();
 
-//        URL resource = getClass().getClassLoader().getResource("resources/logo.png");
-//        File file = new File(resource.toURI());
-        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
         for (int i = 1; i <= numberOfPages; i++) {
             img.setFixedPosition(i, 420, 735);
             document.add(img);
         }
-
+        new File("resources/"+key+"-logo.pdf").delete();
         document.close();
     }
-
 }

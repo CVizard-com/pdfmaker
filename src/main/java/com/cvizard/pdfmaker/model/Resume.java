@@ -1,11 +1,6 @@
-package com.cvizard.pdfcreator.model;
+package com.cvizard.pdfmaker.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -14,9 +9,12 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Document("cvizard")
+@Builder
+@AllArgsConstructor
 public class Resume {
     @MongoId
     private String id;
+    private ResumeStatus status;
     private List<Work> work;
     private List<Education> education;
     private List<Certificate> certificates;
