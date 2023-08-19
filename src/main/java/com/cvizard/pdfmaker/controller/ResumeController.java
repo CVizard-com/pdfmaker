@@ -34,7 +34,7 @@ public class ResumeController {
 
         System.out.println(resume);
         switch (resume.getStatus()) {
-            case READY -> {
+            case READY : {
                 System.out.println("READY");
                 resumeService.createPdf(key, resume);
                 File file = new File("resources/" + key + ".pdf");
@@ -42,12 +42,16 @@ public class ResumeController {
                 responseEntity = ResponseEntity.status(200).body(resource);
                 file.delete();
                 resumeRepository.delete(resume);
+                break;
             }
-            case PROCESSING -> {System.out.println("PROCESSING");
-                responseEntity = ResponseEntity.status(202).body(null);}
-            case ERROR -> {
-                System.out.println("ERROR"); responseEntity = ResponseEntity.status(404).body(null);}
-            default -> responseEntity = ResponseEntity.status(422).body(null);
+            case PROCESSING : {System.out.println("PROCESSING");
+                responseEntity = ResponseEntity.status(202).body(null);
+            break;}
+            case ERROR : {
+                System.out.println("ERROR"); responseEntity = ResponseEntity.status(404).body(null);
+            break;}
+            default :{ responseEntity = ResponseEntity.status(422).body(null);
+                break;}
         }
         return responseEntity;
     }
