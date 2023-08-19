@@ -1,4 +1,4 @@
-package com.cvizard.pdfcreator;
+package com.cvizard.pdfmaker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
