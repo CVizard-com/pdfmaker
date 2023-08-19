@@ -28,10 +28,10 @@ public class ResumeService {
 
     public void createPdf(String key, Resume resume) throws IOException, DocumentException {
         FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf");
-        String processed = templateEngine.process("resume", context);
         Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
-        System.out.println("createPdf " + resume);
+
         context.setVariable("resume",resume);
+        String processed = templateEngine.process("resume", context);
         renderer.setDocumentFromString(processed);
         renderer.layout();
         renderer.createPDF(fos);
