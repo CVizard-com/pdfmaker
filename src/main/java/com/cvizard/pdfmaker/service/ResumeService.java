@@ -30,7 +30,7 @@ public class ResumeService {
         FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf");
         String processed = templateEngine.process("resume", context);
         Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
-
+        System.out.println(resume);
         context.setVariable("resume",resume);
         renderer.setDocumentFromString(processed);
         renderer.layout();
