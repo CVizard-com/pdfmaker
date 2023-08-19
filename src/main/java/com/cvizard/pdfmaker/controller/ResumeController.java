@@ -40,7 +40,7 @@ public class ResumeController {
                 File file = new File("resources/" + key + ".pdf");
                 Resource resource = new FileSystemResource(file);
                 responseEntity = ResponseEntity.status(200).body(resource);
-                file.delete();
+//                file.delete();
 //                resumeRepository.delete(resume);
                 break;
             }
