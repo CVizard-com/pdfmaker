@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.IOException;
 
+import static com.cvizard.pdfmaker.model.ResumeStatus.ERROR;
+
 @RestController
 @RequestMapping("/api/maker")
 @AllArgsConstructor
@@ -28,21 +30,24 @@ public class ResumeController {
     @GetMapping(path = "/download",produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException {
         ResponseEntity <?> responseEntity;
-        Resume resume = resumeRepository.findById(key).orElse(new Resume());
+        Resume resume = resumeRepository.findById(key).orElse(Resume.builder().status(ERROR).build());
 
         switch (resume.getStatus()) {
             case READY -> {
+                System.out.println("READY");
                 resumeService.createPdf(key, resume);
                 File file = new File("resources/" + key + ".pdf");
                 Resource resource = new FileSystemResource(file);
                 responseEntity = ResponseEntity.status(200).body(resource);
                 file.delete();
+                resumeRepository.delete(resume);
             }
-            case PROCESSING -> responseEntity = ResponseEntity.status(202).body(resume);
-            case ERROR -> responseEntity = ResponseEntity.status(404).body(resume);
+            case PROCESSING -> {System.out.println("PROCESSING");
+                responseEntity = ResponseEntity.status(202).body(null);}
+            case ERROR -> {
+                System.out.println("ERROR"); responseEntity = ResponseEntity.status(404).body(null);}
             default -> responseEntity = ResponseEntity.status(422).body(null);
         }
-        resumeRepository.delete(resume);
         return responseEntity;
     }
 }

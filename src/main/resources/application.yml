@@ -3,7 +3,7 @@ server:
   address: 0.0.0.0
 spring:
   kafka:
-    bootstrap-servers: "kafka:29092"
+    bootstrap-servers: "localhost:29092"
   data:
     mongodb:
       host: "localhost"

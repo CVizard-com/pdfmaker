@@ -1,7 +1,6 @@
 package com.cvizard.pdfmaker.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -10,6 +9,8 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Document("cvizard")
+@Builder
+@AllArgsConstructor
 public class Resume {
     @MongoId
     private String id;
