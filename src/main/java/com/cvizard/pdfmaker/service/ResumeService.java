@@ -49,6 +49,7 @@ public class ResumeService {
             img.setFixedPosition(i, 420, 735);
             document.add(img);
         }
+        new File("resources/"+key+"-logo.pdf").delete();
         document.close();
     }
 }
