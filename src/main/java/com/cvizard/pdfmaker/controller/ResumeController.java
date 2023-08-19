@@ -41,7 +41,7 @@ public class ResumeController {
                 Resource resource = new FileSystemResource(file);
                 responseEntity = ResponseEntity.status(200).body(resource);
                 file.delete();
-                resumeRepository.delete(resume);
+//                resumeRepository.delete(resume);
                 break;
             }
             case PROCESSING : {System.out.println("PROCESSING");
