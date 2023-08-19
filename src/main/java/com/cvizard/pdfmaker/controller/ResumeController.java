@@ -36,11 +36,13 @@ public class ResumeController {
                 File file = new File("resources/" + key + ".pdf");
                 Resource resource = new FileSystemResource(file);
                 responseEntity = ResponseEntity.status(200).body(resource);
+                file.delete();
             }
             case PROCESSING -> responseEntity = ResponseEntity.status(202).body(resume);
             case ERROR -> responseEntity = ResponseEntity.status(404).body(resume);
             default -> responseEntity = ResponseEntity.status(422).body(null);
         }
+        resumeRepository.delete(resume);
         return responseEntity;
     }
 }
