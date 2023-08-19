@@ -32,6 +32,7 @@ public class ResumeController {
         ResponseEntity <?> responseEntity;
         Resume resume = resumeRepository.findById(key).orElse(Resume.builder().status(ERROR).build());
 
+        System.out.println(resume);
         switch (resume.getStatus()) {
             case READY -> {
                 System.out.println("READY");
