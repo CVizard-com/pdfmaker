@@ -27,14 +27,14 @@ public class ResumeController {
     private final ResumeRepository resumeRepository;
     private final ResumeService resumeService;
 
-    @GetMapping(path = "/download",produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(path = "/download", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> getPdfFile(@RequestParam(name = "key") String key) throws IOException, DocumentException {
-        ResponseEntity <?> responseEntity;
+        ResponseEntity<?> responseEntity;
         Resume resume = resumeRepository.findById(key).orElse(Resume.builder().status(ERROR).build());
 
         System.out.println(resume);
         switch (resume.getStatus()) {
-            case READY : {
+            case READY: {
                 System.out.println("READY");
                 resumeService.createPdf(key, resume);
                 File file = new File("resources/" + key + ".pdf");
@@ -44,14 +44,20 @@ public class ResumeController {
 //                resumeRepository.delete(resume);
                 break;
             }
-            case PROCESSING : {System.out.println("PROCESSING");
-                responseEntity = ResponseEntity.status(102).body(null);
-            break;}
-            case ERROR : {
-                System.out.println("ERROR"); responseEntity = ResponseEntity.status(404).body(null);
-            break;}
-            default :{ responseEntity = ResponseEntity.status(422).body(null);
-                break;}
+            case PROCESSING: {
+                System.out.println("PROCESSING");
+                responseEntity = ResponseEntity.status(404).body(resume);
+                break;
+            }
+            case ERROR: {
+                System.out.println("ERROR");
+                responseEntity = ResponseEntity.status(404).body(resume);
+                break;
+            }
+            default: {
+                responseEntity = ResponseEntity.status(422).body(null);
+                break;
+            }
         }
         return responseEntity;
     }
