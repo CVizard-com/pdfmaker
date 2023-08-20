@@ -51,7 +51,7 @@ public class ResumeController {
             }
             case ERROR: {
                 System.out.println("ERROR");
-                responseEntity = ResponseEntity.status(404).body(null);
+                responseEntity = ResponseEntity.status(425).body(null);
                 break;
             }
             default: {
