@@ -46,12 +46,12 @@ public class ResumeController {
             }
             case PROCESSING: {
                 System.out.println("PROCESSING");
-                responseEntity = ResponseEntity.status(404).body(resume);
+                responseEntity = ResponseEntity.status(102).body(null);
                 break;
             }
             case ERROR: {
                 System.out.println("ERROR");
-                responseEntity = ResponseEntity.status(404).body(resume);
+                responseEntity = ResponseEntity.status(404).body(null);
                 break;
             }
             default: {
