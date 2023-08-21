@@ -36,9 +36,11 @@
         }
 
         li {
-            margin: 3px;
-            width: 25%;
             float: left;
+        }
+
+        ul {
+            width: 100%;
         }
 
         .page {
@@ -136,8 +138,7 @@
 
     <h2 class="title" th:unless="${#lists.isEmpty(resume.education)}">Edukacja</h2>
     <div th:each="education : ${resume.education}">
-
-        <div th:if="${not #lists.isEmpty(resume.education)}">
+        <div th:unless="${#lists.isEmpty(education.startDate)}">
             <div
                     class="date"
                     th:text="${education.startDate} + ' - ' + ${education.endDate}"
@@ -152,7 +153,7 @@
 
     <h2 class="title" th:unless="${#lists.isEmpty(resume.projects)}">Projekty</h2>
     <div th:each="project : ${resume.projects}">
-        <div th:if="${not #lists.isEmpty(resume.education)}">
+        <div th:unless="${#lists.isEmpty(project.startDate)}">
             <div
                     class="date"
                     th:text="${project.startDate} + ' - ' + ${project.endDate}"
