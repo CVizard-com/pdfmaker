@@ -1,181 +1,192 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Resume</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        /* margin: 20px; */
-      }
+<head>
+  <meta charset="UTF-8"/>
+  <title>CV</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      /* margin: 20px; */
+    }
 
-      h1 {
-        color: #0066cc;
-        font-size: 24px;
-        margin-bottom: 20px;
-      }
+    h1 {
+      color: #0066cc;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
 
-      p {
-        margin: 5px 0;
-      }
+    p {
+      margin: 5px 0;
+    }
 
-      ul {
-        margin: 5px 0;
-        padding-left: 20px;
-        width: 100%;
-        list-style-type: none;
-      }
+    ul {
+      margin: 5px 0;
+      padding-left: 20px;
+      width: 100%;
+      list-style-type: none;
+    }
 
-      ul li:before {
-        content: "\2022";
-        color: #0066cc;
+    ul li:before {
+      content: "\2022";
+      color: #0066cc;
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+
+    li {
+      float: left;
+    }
+
+    ul {
+      width: 100%;
+    }
+
+    .page {
+      margin: auto;
+      background-color: white;
+      box-sizing: border-box;
+
+    }
+
+    .date {
+      width: 100%;
+      font-weight: bold;
+      color: #0066cc;
+    }
+
+    .title {
+      color: grey;
+      font-size: 150%;
+    }
+
+    .info {
+      margin-left: 50px;
+    }
+
+    .name {
+      font-weight: bold;
+    }
+
+    .summary {
+      color: grey;
+      font-size: 90%;
+    }
+
+    div {
+      margin-bottom: 8px;
+    }
+
+    @page {
+      padding-top: 69px;
+      size: A4;
+      margin: 80px;
+      @bottom-left {
+        content: "Bluesoft Sp. z o.o. Aleje_Jerozolimskie 134 02-305 Warszawa";
+        color: gray;
+        font-family: Tahoma, sans-serif;
+        padding-left: 50px;
+        padding-bottom: 120px;
+        font-size: 84%;
+      }
+      @bottom-center {
+        content: "+48 22 37 37 000 info@bluesoft.com www.bluesoft.com";
+        color: gray;
+        font-family: Tahoma, sans-serif;
+        padding-bottom: 120px;
+        font-size: 84%;
+
+      }
+      @bottom-right {
+        content: "KRS 0000138707 NIP: 5262667699";
+        color: gray;
+        font-family: Tahoma, sans-serif;
+        padding-right: 100px;
+        padding-bottom: 120px;
+        font-size: 84%;
+
+      }
+      @bottom-right-corner {
+        content: counter(page);
+        color: gray;
+        font-family: Tahoma, sans-serif;
         font-weight: bold;
-        display: inline-block;
-        width: 1em;
-        margin-left: -1em;
       }
+    }gs
+  </style>
+</head>
+<body>
 
-      li {
-        margin: 3px;
-        width: 25%;
-        float: left;
-      }
-
-      .page {
-        margin: auto;
-        background-color: white;
-        box-sizing: border-box;
-
-      }
-
-      .date {
-        width: 100%;
-        font-weight: bold;
-        color: #0066cc;
-      }
-
-      .title {
-        color: grey;
-        font-size: 150%;
-      }
-
-      .info {
-        margin-left: 50px;
-      }
-
-      .name {
-        font-weight: bold;
-      }
-
-      .summary {
-        color: grey;
-        font-size: 90%;
-      }
-
-      div {
-        margin-bottom: 8px;
-      }
-
-      @page  {
-          padding-top: 69px;
-        size: A4;
-          margin: 80px;
-          @bottom-left{
-              content: "Bluesoft Sp. z o.o. Aleje_Jerozolimskie 134 02-305 Warszawa";
-              color: gray;
-              font-family: Tahoma,sans-serif;
-              padding-left: 50px;
-              padding-bottom: 120px;
-              font-size: 84%;
-          }
-          @bottom-center {
-              content: "+48 22 37 37 000 info@bluesoft.com www.bluesoft.com";
-              color: gray;
-              font-family: Tahoma,sans-serif;
-              padding-bottom: 120px;
-              font-size: 84%;
-
-          }
-          @bottom-right {
-              content: "KRS 0000138707 NIP: 5262667699";
-              color: gray;
-              font-family: Tahoma,sans-serif;
-              padding-right: 100px;
-              padding-bottom: 120px;
-              font-size: 84%;
-
-          }
-          @bottom-right-corner {
-              content: counter(page);
-              color: gray;
-              font-family: Tahoma,sans-serif;
-              font-weight: bold;
-          }
-      }
-    </style>
-  </head>
-  <body>
-
-    <div class="page">
-      <h2 class="title" th:unless="${#lists.isEmpty(resume.work)}">Work experience</h2>
-      <div th:each="work : ${resume.work}">
-        <div
-          class="date"
-          th:text="${work.startDate} + ' - ' + ${work.endDate}"
-        ></div>
-        <div class="info">
-          <div
-            class="name"
-            th:text="${work.position} + ', ' + ${work.name}"
-          ></div>
-          <div class="summary" th:text="${work.summary}"></div>
-        </div>
-      </div>
-
-      <h2 class="title" th:unless="${#lists.isEmpty(resume.education)}">Education</h2>
-      <div th:each="education : ${resume.education}">
-        <div
-          class="date"
-          th:text="${education.startDate} + ' - ' + ${education.endDate}"
-        ></div>
-        <div class="info">
-          <div class="name" th:text="${education.institution}"></div>
-          <div class="summary" th:text="${education.studyType}"></div>
-        </div>
-      </div>
-
-      <h2 class="title" th:unless="${#lists.isEmpty(resume.projects)}">Projects</h2>
-      <div th:each="project : ${resume.projects}">
-        <div
-          class="date"
-          th:text="${project.startDate} + ' - ' + ${project.endDate}"
-        ></div>
-        <div class="info">
-          <div class="name" th:text="${project.name}"></div>
-          <div class="summary" th:text="${project.summary}"></div>
-        </div>
-      </div>
-      <h2 class="title" th:unless="${#lists.isEmpty(resume.certificates)}">Certificates</h2>
-      <div th:each="certificate : ${resume.certificates}">
-        <div class="date" th:text="${certificate.date}"></div>
-        <div class="info">
-          <div class="name" th:text="${certificate.name}"></div>
-          <div class="summary" th:text="${certificate.issuer}"></div>
-        </div>
-      </div>
-      <h2 class="title" th:unless="${#lists.isEmpty(resume.languages)}">Languages</h2>
-      <div th:each="language : ${resume.languages}">
-        <div class="date" th:text="${language.language}"></div>
-        <div class="info">
-          <div class="name" th:text="${language.level}"></div>
-          <div class="summary"></div>
-        </div>
-      </div>
-
-      <h2 class="title" th:unless="${#lists.isEmpty(resume.skills)}">Skills</h2>
-      <ul th:each="skill : ${resume.skills}">
-        <li th:text="${skill.name}"></li>
-      </ul>
+<div class="page">
+  <h2 class="title" th:unless="${#lists.isEmpty(resume.work)}">Experience</h2>
+  <div th:each="work : ${resume.work}">
+    <div th:unless="${#lists.isEmpty(work.startDate)}">
+      <div class="date" th:text="${work.startDate} + ' - ' + ${work.endDate}"></div>
     </div>
-  </body>
+    <div class="info">
+      <div th:if="${not #lists.isEmpty(resume.work)}">
+        <div
+                class="name"
+                th:text="${work.position} + ', ' + ${work.name}"
+        />
+      </div>
+
+      <div class="summary" th:text="${work.summary}"></div>
+    </div>
+  </div>
+
+  <h2 class="title" th:unless="${#lists.isEmpty(resume.education)}">Education</h2>
+  <div th:each="education : ${resume.education}">
+    <div th:unless="${#lists.isEmpty(education.startDate)}">
+      <div
+              class="date"
+              th:text="${education.startDate} + ' - ' + ${education.endDate}"
+      />
+    </div>
+
+    <div class="info">
+      <div class="name" th:text="${education.institution}"></div>
+      <div class="summary" th:text="${education.studyType}"></div>
+    </div>
+  </div>
+
+  <h2 class="title" th:unless="${#lists.isEmpty(resume.projects)}">Projects</h2>
+  <div th:each="project : ${resume.projects}">
+    <div th:unless="${#lists.isEmpty(project.startDate)}">
+      <div
+              class="date"
+              th:text="${project.startDate} + ' - ' + ${project.endDate}"
+
+      />
+    </div>
+
+    <div class="info">
+      <div class="name" th:text="${project.name}"></div>
+      <div class="summary" th:text="${project.summary}"></div>
+    </div>
+  </div>
+  <h2 class="title" th:unless="${#lists.isEmpty(resume.certificates)}">Certificates</h2>
+  <div th:each="certificate : ${resume.certificates}">
+    <div class="date" th:text="${certificate.date}"></div>
+    <div class="info">
+      <div class="name" th:text="${certificate.name}"></div>
+      <div class="summary" th:text="${certificate.issuer}"></div>
+    </div>
+  </div>
+  <h2 class="title" th:unless="${#lists.isEmpty(resume.languages)}">Languages</h2>
+  <div th:each="language : ${resume.languages}">
+    <div class="date" th:text="${language.language}"></div>
+    <div class="info">
+      <div class="name" th:text="${language.level}"></div>
+      <div class="summary"></div>
+    </div>
+  </div>
+
+  <h2 class="title" th:unless="${#lists.isEmpty(resume.skills)}">Skills</h2>
+  <ul th:each="skill : ${resume.skills}">
+    <li th:text="${skill.name}"></li>
+  </ul>
+</div>
+</body>
 </html>
