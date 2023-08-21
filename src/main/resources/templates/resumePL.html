@@ -119,7 +119,7 @@
 <div class="page">
     <h2 class="title" th:unless="${#lists.isEmpty(resume.work)}">Doswiadczenie zawodowe</h2>
     <div th:each="work : ${resume.work}">
-        <div th:unless="${#lists.isEmpty(resume.work)}">
+        <div th:unless="${#lists.isEmpty(work.startDate)}">
             <div class="date" th:text="${work.startDate} + ' - ' + ${work.endDate}"></div>
         </div>
         <div class="info">
