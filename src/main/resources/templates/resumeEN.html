@@ -119,9 +119,9 @@
   </style>
 </head>
 <body>
-
+<h1>Blank CV</h1>
 <div class="page">
-  <h1>Blank CV</h1>
+
   <h2 class="title" th:unless="${#lists.isEmpty(resume.work)}">Experience</h2>
     <div th:each="work : ${resume.work}">
       <div th:unless="${#lists.isEmpty(work.startDate)}">
