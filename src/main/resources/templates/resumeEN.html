@@ -5,14 +5,14 @@
   <title>CV</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Tahoma, sans-serif;
       /* margin: 20px; */
     }
 
     h1 {
       color: #0066cc;
-      font-size: 24px;
       margin-bottom: 20px;
+      font-size: 250%;
     }
 
     p {
@@ -121,74 +121,67 @@
 <body>
 
 <div class="page">
+  <h1>Blank CV</h1>
   <h2 class="title" th:unless="${#lists.isEmpty(resume.work)}">Experience</h2>
-  <div th:each="work : ${resume.work}">
-    <div th:unless="${#lists.isEmpty(work.startDate)}">
-      <div class="date" th:text="${work.startDate} + ' - ' + ${work.endDate}"></div>
-    </div>
-    <div class="info">
-      <div th:if="${not #lists.isEmpty(resume.work)}">
-        <div
-                class="name"
-                th:text="${work.position} + ', ' + ${work.name}"
-        />
+    <div th:each="work : ${resume.work}">
+      <div th:unless="${#lists.isEmpty(work.startDate)}">
+        <div class="date" th:text="${work.startDate} + ' - ' + ${work.endDate}"></div>
       </div>
+      <div class="info">
+        <div th:if="${not #lists.isEmpty(resume.work)}">
+          <div class="name" th:text="${work.position} + ', ' + ${work.name}"/>
+        </div>
 
-      <div class="summary" th:text="${work.summary}"></div>
+        <div class="summary" th:text="${work.summary}"></div>
+      </div>
     </div>
-  </div>
 
   <h2 class="title" th:unless="${#lists.isEmpty(resume.education)}">Education</h2>
-  <div th:each="education : ${resume.education}">
-    <div th:unless="${#lists.isEmpty(education.startDate)}">
-      <div
-              class="date"
-              th:text="${education.startDate} + ' - ' + ${education.endDate}"
-      />
-    </div>
+    <div th:each="education : ${resume.education}">
+      <div th:unless="${#lists.isEmpty(education.startDate)}">
+        <div class="date" th:text="${education.startDate} + ' - ' + ${education.endDate}"/>
+      </div>
 
-    <div class="info">
-      <div class="name" th:text="${education.institution}"></div>
-      <div class="summary" th:text="${education.studyType}"></div>
+      <div class="info">
+        <div class="name" th:text="${education.institution}"></div>
+        <div class="summary" th:text="${education.studyType}"></div>
+      </div>
     </div>
-  </div>
 
   <h2 class="title" th:unless="${#lists.isEmpty(resume.projects)}">Projects</h2>
-  <div th:each="project : ${resume.projects}">
-    <div th:unless="${#lists.isEmpty(project.startDate)}">
-      <div
-              class="date"
-              th:text="${project.startDate} + ' - ' + ${project.endDate}"
+    <div th:each="project : ${resume.projects}">
+      <div th:unless="${#lists.isEmpty(project.startDate)}">
+        <div class="date" th:text="${project.startDate} + ' - ' + ${project.endDate}"/>
+      </div>
 
-      />
+      <div class="info">
+        <div class="name" th:text="${project.name}"></div>
+        <div class="summary" th:text="${project.summary}"></div>
+      </div>
     </div>
 
-    <div class="info">
-      <div class="name" th:text="${project.name}"></div>
-      <div class="summary" th:text="${project.summary}"></div>
-    </div>
-  </div>
   <h2 class="title" th:unless="${#lists.isEmpty(resume.certificates)}">Certificates</h2>
-  <div th:each="certificate : ${resume.certificates}">
-    <div class="date" th:text="${certificate.date}"></div>
-    <div class="info">
-      <div class="name" th:text="${certificate.name}"></div>
-      <div class="summary" th:text="${certificate.issuer}"></div>
+    <div th:each="certificate : ${resume.certificates}">
+      <div class="date" th:text="${certificate.date}"></div>
+      <div class="info">
+        <div class="name" th:text="${certificate.name}"></div>
+        <div class="summary" th:text="${certificate.issuer}"></div>
+      </div>
     </div>
-  </div>
+
   <h2 class="title" th:unless="${#lists.isEmpty(resume.languages)}">Languages</h2>
-  <div th:each="language : ${resume.languages}">
-    <div class="date" th:text="${language.language}"></div>
-    <div class="info">
-      <div class="name" th:text="${language.level}"></div>
-      <div class="summary"></div>
+    <div th:each="language : ${resume.languages}">
+      <div class="date" th:text="${language.language}"></div>
+      <div class="info">
+        <div class="name" th:text="${language.level}"></div>
+        <div class="summary"></div>
+      </div>
     </div>
-  </div>
 
   <h2 class="title" th:unless="${#lists.isEmpty(resume.skills)}">Skills</h2>
-  <ul th:each="skill : ${resume.skills}">
-    <li th:text="${skill.name}"></li>
-  </ul>
+    <ul th:each="skill : ${resume.skills}">
+      <li th:text="${skill.name}"></li>
+    </ul>
 </div>
 </body>
 </html>
