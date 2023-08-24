@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 import static com.cvizard.pdfmaker.model.ResumeStatus.ERROR;
+import static com.cvizard.pdfmaker.model.ResumeStatus.READY;
 
 @RestController
 @RequestMapping("/api/maker")
@@ -25,5 +26,10 @@ public class ResumeController {
 
         Resume resume = resumeRepository.findById(key).orElse(Resume.builder().status(ERROR).build());
         return resumeService.createResponse(resume, key, template);
+    }
+
+    @GetMapping(path="/test", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<?> test() throws DocumentException, IOException {
+        return resumeService.createResponse(Resume.builder().status(READY).build(), "test", "EN");
     }
 }
