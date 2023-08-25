@@ -82,43 +82,17 @@
         div {
             margin-bottom: 8px;
         }
-
-        @page {
-            padding-top: 69px;
-            size: A4;
-            margin: 80px;
-            @bottom-left {
-                content: "Bluesoft Sp. z o.o. Aleje_Jerozolimskie 134 02-305 Warszawa";
-                color: gray;
-                font-family: Tahoma, sans-serif;
-                padding-left: 50px;
-                padding-bottom: 120px;
-                font-size: 84%;
-            }
-            @bottom-center {
-                content: "+48 22 37 37 000 info@bluesoft.com www.bluesoft.com";
-                color: gray;
-                font-family: Tahoma, sans-serif;
-                padding-bottom: 120px;
-                font-size: 84%;
-
-            }
-            @bottom-right {
-                content: "KRS 0000138707 NIP: 5262667699";
-                color: gray;
-                font-family: Tahoma, sans-serif;
-                padding-right: 100px;
-                padding-bottom: 120px;
-                font-size: 84%;
-
-            }
-            @bottom-right-corner {
-                content: counter(page);
-                color: gray;
-                font-family: Tahoma, sans-serif;
-                font-weight: bold;
-            }
+        footer{
+            margin-top: 105px;
         }
+        .footerItem{
+            float: left;
+            text-align: center;
+            width: 33%;
+            color: gray;
+        }
+
+
     </style>
 </head>
 <body>
@@ -186,6 +160,12 @@
         <ul th:each="skill : ${resume.skills}">
             <li th:text="${skill.name}"></li>
         </ul>
+
+    <footer>
+        <div class="footerItem">Bluesoft Sp. z o.o.<br> Aleje&nbsp;Jerozolimskie <br>134 02-305 Warszawa</div>
+        <div class="footerItem">+48 22 37 37 000 <br>info@bluesoft.com<br> www.bluesoft.com</div>
+        <div class="footerItem">KRS 0000138707 <br>NIP: 5262667699</div>
+    </footer>
 </div>
 </body>
 </html>

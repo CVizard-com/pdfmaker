@@ -121,7 +121,7 @@ public class ResumeService {
         int numberOfPages = pdfDoc.getNumberOfPages();
 
         for (int i = 1; i <= numberOfPages; i++) {
-            img.setFixedPosition(i, 420, 735);
+            img.setFixedPosition(i, 420, 700);
             document.add(img);
         }
         new File("resources/"+key+"-logo.pdf").delete();
