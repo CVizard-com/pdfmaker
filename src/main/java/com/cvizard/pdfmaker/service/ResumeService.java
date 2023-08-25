@@ -69,7 +69,7 @@ public class ResumeService {
 
     public void createPdf(String key, Resume resume, String template) throws IOException, DocumentException {
         FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf");
-        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
+//        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
 
         context.setVariable("resume",resume);
         String processed = templateEngine.process("resume"+template, context);
@@ -101,10 +101,10 @@ public class ResumeService {
 
         int numberOfPages = pdfDoc.getNumberOfPages();
 
-        for (int i = 1; i <= numberOfPages; i++) {
-            img.setFixedPosition(i, 420, 735);
-            document.add(img);
-        }
+//        for (int i = 1; i <= numberOfPages; i++) {
+//            img.setFixedPosition(i, 420, 735);
+//            document.add(img);
+//        }
         new File("resources/"+key+"-logo.pdf").delete();
         document.close();
     }
