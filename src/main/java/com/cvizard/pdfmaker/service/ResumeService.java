@@ -70,6 +70,7 @@ public class ResumeService {
     }
 
     private ResponseEntity<?> getResponseEntity(String key, String fileFormat) {
+
         File file = new File("resources/" + key + "." + fileFormat);
         Resource resource = new FileSystemResource(file);
         HttpHeaders headers = new HttpHeaders();
@@ -82,7 +83,7 @@ public class ResumeService {
     }
 
     public void createPdf(String key, Resume resume, String template) throws IOException, DocumentException {
-        FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf");
+        FileOutputStream fos = new FileOutputStream("resources/"+key+".pdf");
 
         context.setVariable("resume",resume);
         String processed = templateEngine.process("resume"+template, context);
@@ -104,28 +105,28 @@ public class ResumeService {
         fos.close();
 
         Files.delete(tempPath);
-        addLogoToPdf(key);
+//        addLogoToPdf(key);
 
     }
-    public void addLogoToPdf(String key) throws IOException {
-
-        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
-        PdfDocument pdfDoc =
-                new PdfDocument(
-                        new PdfReader("resources/"+key+"-logo.pdf"),
-                        new PdfWriter("resources/"+key+".pdf")
-                );
-        Document document = new Document(pdfDoc);
-
-        int numberOfPages = pdfDoc.getNumberOfPages();
-
-        for (int i = 1; i <= numberOfPages; i++) {
-            img.setFixedPosition(i, 420, 735);
-            document.add(img);
-        }
-        new File("resources/"+key+"-logo.pdf").delete();
-
-    }
+//    public void addLogoToPdf(String key) throws IOException {
+//
+//        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
+//        PdfDocument pdfDoc =
+//                new PdfDocument(
+//                        new PdfReader("resources/"+key+"-logo.pdf"),
+//                        new PdfWriter("resources/"+key+".pdf")
+//                );
+//        Document document = new Document(pdfDoc);
+//
+//        int numberOfPages = pdfDoc.getNumberOfPages();
+//
+//        for (int i = 1; i <= numberOfPages; i++) {
+//            img.setFixedPosition(i, 420, 735);
+//            document.add(img);
+//        }
+//        new File("resources/"+key+"-logo.pdf").delete();
+//
+//    }
     public void createDocx(String key) {
         com.spire.pdf.PdfDocument pdf = new  com.spire.pdf.PdfDocument();
         pdf.loadFromFile("resources/"+key+".pdf");
