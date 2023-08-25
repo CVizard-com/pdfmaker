@@ -11,6 +11,7 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.text.DocumentException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -34,6 +35,7 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ResumeService {
 
     private final SpringTemplateEngine templateEngine;
@@ -46,6 +48,7 @@ public class ResumeService {
         ResponseEntity<?> responseEntity;
         switch (resume.getStatus()) {
             case READY: {
+                log.info("Resume is ready");
                 createPdf(key, resume, template);
                 if (fileFormat.equals("docx")) {
                     createDocx(key);
@@ -54,10 +57,12 @@ public class ResumeService {
                 break;
             }
             case PROCESSING: {
+                log.info("Resume is processing");
                 responseEntity = ResponseEntity.status(102).body(null);
                 break;
             }
             case ERROR: {
+                log.error("Resume not found");
                 responseEntity = ResponseEntity.status(404).body(null);
                 break;
             }
