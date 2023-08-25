@@ -28,6 +28,6 @@ public class ResumeController {
             @RequestParam("format") String fileFormat ) throws IOException, DocumentException {
 
         Resume resume = resumeRepository.findById(key).orElse(Resume.builder().status(ERROR).build());
-        return resumeService.createResponse(resume, key, template,fileFormat);
+        return resumeService.createResponse(resume, key, template, fileFormat);
     }
 }

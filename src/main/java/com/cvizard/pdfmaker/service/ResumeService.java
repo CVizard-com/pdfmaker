@@ -105,28 +105,28 @@ public class ResumeService {
         fos.close();
 
         Files.delete(tempPath);
-//        addLogoToPdf(key);
+        addLogoToPdf(key);
 
     }
-//    public void addLogoToPdf(String key) throws IOException {
-//
-//        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
-//        PdfDocument pdfDoc =
-//                new PdfDocument(
-//                        new PdfReader("resources/"+key+"-logo.pdf"),
-//                        new PdfWriter("resources/"+key+".pdf")
-//                );
-//        Document document = new Document(pdfDoc);
-//
-//        int numberOfPages = pdfDoc.getNumberOfPages();
-//
-//        for (int i = 1; i <= numberOfPages; i++) {
-//            img.setFixedPosition(i, 420, 735);
-//            document.add(img);
-//        }
-//        new File("resources/"+key+"-logo.pdf").delete();
-//
-//    }
+    public void addLogoToPdf(String key) throws IOException {
+
+        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
+        PdfDocument pdfDoc =
+                new PdfDocument(
+                        new PdfReader("resources/"+key+"-logo.pdf"),
+                        new PdfWriter("resources/"+key+".pdf")
+                );
+        Document document = new Document(pdfDoc);
+
+        int numberOfPages = pdfDoc.getNumberOfPages();
+
+        for (int i = 1; i <= numberOfPages; i++) {
+            img.setFixedPosition(i, 420, 735);
+            document.add(img);
+        }
+        new File("resources/"+key+"-logo.pdf").delete();
+        document.close();
+    }
     public void createDocx(String key) {
         com.spire.pdf.PdfDocument pdf = new  com.spire.pdf.PdfDocument();
         pdf.loadFromFile("resources/"+key+".pdf");
