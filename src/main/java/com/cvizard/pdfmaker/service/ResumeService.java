@@ -54,7 +54,7 @@ public class ResumeService {
                 break;
             }
             case PROCESSING: {
-                responseEntity = ResponseEntity.status(425).body(null);
+                responseEntity = ResponseEntity.status(102).body(null);
                 break;
             }
             case ERROR: {
