@@ -21,10 +21,13 @@ public class ResumeController {
     private final ResumeRepository resumeRepository;
     private final ResumeService resumeService;
 
-    @GetMapping(path = "/download/{template}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<?> getPdfFile(@PathVariable("template") String template, @RequestParam(name = "key") String key) throws IOException, DocumentException {
+    @GetMapping(path = "/download")
+    public ResponseEntity<?> getPdfFile(
+            @RequestParam("template") String template,
+            @RequestParam(name = "key") String key,
+            @RequestParam("format") String fileFormat ) throws IOException, DocumentException {
 
         Resume resume = resumeRepository.findById(key).orElse(Resume.builder().status(ERROR).build());
-        return resumeService.createResponse(resume, key, template);
+        return resumeService.createResponse(resume, key, template,fileFormat);
     }
 }
