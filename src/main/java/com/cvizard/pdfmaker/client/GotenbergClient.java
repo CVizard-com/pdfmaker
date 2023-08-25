@@ -14,6 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 @FeignClient(name = "gotenbergClient", url = "${gotenberg.api.url}")
 public interface GotenbergClient {
 
-    @PostMapping( value = "/convert/html", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_PDF_VALUE)
+    @PostMapping( value = "/forms/chromium/convert/html", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_PDF_VALUE)
     ResponseEntity<byte[]> convertHtml(@RequestPart("file") MultipartFile file);
 }

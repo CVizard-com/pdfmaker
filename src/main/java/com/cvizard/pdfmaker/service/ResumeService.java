@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -68,7 +69,7 @@ public class ResumeService {
 
     public void createPdf(String key, Resume resume, String template) throws IOException, DocumentException {
         FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf");
-//        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
+        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
 
         context.setVariable("resume",resume);
         String processed = templateEngine.process("resume"+template, context);
@@ -78,22 +79,16 @@ public class ResumeService {
         Path tempPath = Paths.get(tempDir, fileName);
         Files.writeString(tempPath, processed);
 
-        // Create a MultipartFile object from the temporary file
-        File tempFile = tempPath.toFile();
-//        MultipartFile htmlFile = new MockMultipartFile(
-//                tempFile.getName(),
-//                new FileInputStream(tempFile)
-//        );
         MultipartFile htmlFile = new MockMultipartFile(
                 "index.html",
                 "index.html",
                 (String)null,
-                new FileInputStream("resources/index.html")
+                new FileInputStream(tempPath.toFile())
         );
-        System.out.println( htmlFile.getOriginalFilename() + "|"+  htmlFile.getName());
 
-// Send the MultipartFile object to the Gotenberg API for conversion
-        byte[] response = gotenbergClient.convertHtml(htmlFile).getBody();
+        ResponseEntity<byte[]> response = gotenbergClient.convertHtml(htmlFile);
+        fos.write(Objects.requireNonNull(response.getBody()));
+        fos.close();
 
         Files.delete(tempPath);
 
@@ -105,11 +100,11 @@ public class ResumeService {
         Document document = new Document(pdfDoc);
 
         int numberOfPages = pdfDoc.getNumberOfPages();
-//
-//        for (int i = 1; i <= numberOfPages; i++) {
-//            img.setFixedPosition(i, 420, 735);
-//            document.add(img);
-//        }
+
+        for (int i = 1; i <= numberOfPages; i++) {
+            img.setFixedPosition(i, 420, 735);
+            document.add(img);
+        }
         new File("resources/"+key+"-logo.pdf").delete();
         document.close();
     }
