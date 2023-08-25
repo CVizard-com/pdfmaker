@@ -83,7 +83,7 @@ public class ResumeService {
     }
 
     public void createPdf(String key, Resume resume, String template) throws IOException, DocumentException {
-        FileOutputStream fos = new FileOutputStream("resources/"+key+".pdf");
+        FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf");
 
         context.setVariable("resume",resume);
         String processed = templateEngine.process("resume"+template, context);
