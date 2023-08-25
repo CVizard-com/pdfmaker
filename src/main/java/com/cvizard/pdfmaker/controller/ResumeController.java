@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 import static com.cvizard.pdfmaker.model.ResumeStatus.ERROR;
+import static com.cvizard.pdfmaker.model.ResumeStatus.READY;
 
 @RestController
 @RequestMapping("/api/maker")

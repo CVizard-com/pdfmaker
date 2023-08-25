@@ -125,7 +125,7 @@
 <h1>Blank CV</h1>
 <div class="page">
 
-    <h2 class="title" th:unless="${#lists.isEmpty(resume.work)}">Doswiadczenie zawodowe</h2>
+    <h2 class="title" th:unless="${#lists.isEmpty(resume.work)}">Doświadczenie zawodowe</h2>
         <div th:each="work : ${resume.work}">
 
             <div th:unless="${#lists.isEmpty(work.startDate)}">
@@ -173,7 +173,7 @@
             </div>
         </div>
 
-    <h2 class="title" th:unless="${#lists.isEmpty(resume.languages)}">Jezyki</h2>
+    <h2 class="title" th:unless="${#lists.isEmpty(resume.languages)}">Języki</h2>
         <div th:each="language : ${resume.languages}">
             <div class="date" th:text="${language.language}"></div>
             <div class="info">
@@ -182,7 +182,7 @@
             </div>
         </div>
 
-    <h2 class="title" th:unless="${#lists.isEmpty(resume.skills)}">Umiejetnosci</h2>
+    <h2 class="title" th:unless="${#lists.isEmpty(resume.skills)}">Umiejętności</h2>
         <ul th:each="skill : ${resume.skills}">
             <li th:text="${skill.name}"></li>
         </ul>

@@ -12,3 +12,6 @@ spring:
       password: "example"
       database: "cvizard"
       authentication-database: "admin"
+gotenberg:
+  api:
+    url: "http://localhost:3000"
