@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -41,14 +42,15 @@ public class ResumeService {
 
     private final GotenbergClient gotenbergClient;
 
-    public ResponseEntity<?> createResponse(Resume resume, String key, String template) throws DocumentException, IOException {
+    public ResponseEntity<?> createResponse(Resume resume, String key, String template, String fileFormat) throws DocumentException, IOException {
         ResponseEntity<?> responseEntity;
         switch (resume.getStatus()) {
             case READY: {
                 createPdf(key, resume, template);
-                File file = new File("resources/" + key + ".pdf");
-                Resource resource = new FileSystemResource(file);
-                responseEntity = ResponseEntity.status(200).body(resource);
+                if (fileFormat.equals("docx")) {
+                    createDocx(key);
+                }
+                responseEntity = getResponseEntity(key, fileFormat);
                 break;
             }
             case PROCESSING: {
@@ -67,9 +69,20 @@ public class ResumeService {
         return responseEntity;
     }
 
+    private ResponseEntity<?> getResponseEntity(String key, String fileFormat) {
+        File file = new File("resources/" + key + "." + fileFormat);
+        Resource resource = new FileSystemResource(file);
+        HttpHeaders headers = new HttpHeaders();
+        if (fileFormat.equals("pdf")) {
+            headers.setContentType(MediaType.APPLICATION_PDF);
+        } else if (fileFormat.equals("docx")) {
+            headers.setContentType(MediaType.valueOf("application/vnd.openxmlformats-officedocument.wordprocessingml.document"));
+        }
+        return ResponseEntity.status(200).headers(headers).body(resource);
+    }
+
     public void createPdf(String key, Resume resume, String template) throws IOException, DocumentException {
         FileOutputStream fos = new FileOutputStream("resources/"+key+"-logo.pdf");
-//        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
 
         context.setVariable("resume",resume);
         String processed = templateEngine.process("resume"+template, context);
@@ -91,7 +104,12 @@ public class ResumeService {
         fos.close();
 
         Files.delete(tempPath);
+        addLogoToPdf(key);
 
+    }
+    public void addLogoToPdf(String key) throws IOException {
+
+        Image img = new Image(ImageDataFactory.create("/app/resources/logo.png"));
         PdfDocument pdfDoc =
                 new PdfDocument(
                         new PdfReader("resources/"+key+"-logo.pdf"),
@@ -101,11 +119,18 @@ public class ResumeService {
 
         int numberOfPages = pdfDoc.getNumberOfPages();
 
-//        for (int i = 1; i <= numberOfPages; i++) {
-//            img.setFixedPosition(i, 420, 735);
-//            document.add(img);
-//        }
+        for (int i = 1; i <= numberOfPages; i++) {
+            img.setFixedPosition(i, 420, 735);
+            document.add(img);
+        }
         new File("resources/"+key+"-logo.pdf").delete();
-        document.close();
+
+    }
+    public void createDocx(String key) {
+        com.spire.pdf.PdfDocument pdf = new  com.spire.pdf.PdfDocument();
+        pdf.loadFromFile("resources/"+key+".pdf");
+        pdf.getConvertOptions().setConvertToWordUsingFlow(true);
+        pdf.saveToFile("resources/"+key+".docx", com.spire.pdf.FileFormat.DOCX);
+        pdf.close();
     }
 }
