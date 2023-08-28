@@ -1,6 +1,8 @@
 package com.cvizard.pdfmaker.service;
 
 import com.cvizard.pdfmaker.client.GotenbergClient;
+import com.cvizard.pdfmaker.exceptions.NoResumeException;
+import com.cvizard.pdfmaker.exceptions.StillProcessingException;
 import com.cvizard.pdfmaker.model.Resume;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -51,10 +53,9 @@ public class ResumeService {
                 responseEntity = getResponseEntity(key, fileFormat);
             }
             case PROCESSING -> {
-                log.info("Resume is processing "+ resume.getId());
-                responseEntity = ResponseEntity.status(102).body(null);
+                throw new StillProcessingException();
             }
-            default -> responseEntity = ResponseEntity.status(404).body(null);
+            default -> throw new NoResumeException();
         }
         return responseEntity;
     }
@@ -64,12 +65,19 @@ public class ResumeService {
         File file = new File("resources/" + key + "." + fileFormat);
         Resource resource = new FileSystemResource(file);
         HttpHeaders headers = new HttpHeaders();
+
         if (fileFormat.equals("pdf")) {
+
             headers.setContentType(MediaType.APPLICATION_PDF);
+
         } else if (fileFormat.equals("docx")) {
+
             headers.setContentType(MediaType.valueOf("application/vnd.openxmlformats-officedocument.wordprocessingml.document"));
         }
-        return ResponseEntity.status(200).headers(headers).body(resource);
+        return ResponseEntity
+                .status(200)
+                .headers(headers)
+                .body(resource);
     }
 
     public void createPdf(String key, Resume resume, String template) throws IOException, DocumentException {
