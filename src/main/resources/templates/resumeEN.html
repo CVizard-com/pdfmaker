@@ -82,7 +82,7 @@
     div {
       margin-bottom: 8px;
     }
-    footer{
+    .footer{
       margin-top: 105px;
     }
     .footerItem{
@@ -100,7 +100,7 @@
 
   <h2 class="title" th:unless="${#lists.isEmpty(resume.work)}">Experience</h2>
     <div th:each="work : ${resume.work}">
-      <div th:unless="${#lists.isEmpty(work.startDate)}">
+      <div th:unless="${#lists.isEmpty(work.startDate) && #lists.isEmpty(work.endDate)}">
         <div class="date" th:text="${work.startDate} + ' - ' + ${work.endDate}"></div>
       </div>
       <div class="info">
@@ -114,7 +114,7 @@
 
   <h2 class="title" th:unless="${#lists.isEmpty(resume.education)}">Education</h2>
     <div th:each="education : ${resume.education}">
-      <div th:unless="${#lists.isEmpty(education.startDate)}">
+      <div th:unless="${#lists.isEmpty(education.startDate) && #lists.isEmpty(education.endDate)}">
         <div class="date" th:text="${education.startDate} + ' - ' + ${education.endDate}"/>
       </div>
 
@@ -126,7 +126,7 @@
 
   <h2 class="title" th:unless="${#lists.isEmpty(resume.projects)}">Projects</h2>
     <div th:each="project : ${resume.projects}">
-      <div th:unless="${#lists.isEmpty(project.startDate)}">
+      <div th:unless="${#lists.isEmpty(project.startDate) && #lists.isEmpty(project.endDate)}">
         <div class="date" th:text="${project.startDate} + ' - ' + ${project.endDate}"/>
       </div>
 
@@ -159,11 +159,11 @@
       <li th:text="${skill.name}"></li>
     </ul>
 
-  <footer>
+  <div class="footer">
     <div class="footerItem">Bluesoft Sp. z o.o.<br> Aleje&nbsp;Jerozolimskie <br>134 02-305 Warszawa</div>
     <div class="footerItem">+48 22 37 37 000 <br>info@bluesoft.com<br> www.bluesoft.com</div>
     <div class="footerItem">KRS 0000138707 <br>NIP: 5262667699</div>
-  </footer>
+  </div>
 </div>
 </body>
 </html>
