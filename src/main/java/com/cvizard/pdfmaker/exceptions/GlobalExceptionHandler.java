@@ -50,18 +50,6 @@ public class GlobalExceptionHandler {
                 .body(output);
     }
 
-    @ExceptionHandler(BadFormatResumeException.class)
-    ResponseEntity<String> handleBadFormatResumeException(BadFormatResumeException badFormatResumeException){
-        log.error("resume exception has been thrown");
-        log.error(badFormatResumeException.getMessage());
-        String output =
-                "this error has been found -> " +
-                        badFormatResumeException.getMessage();
-        return ResponseEntity
-                .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .body(output);
-    }
-
     @ExceptionHandler(StillProcessingException.class)
     ResponseEntity<String> handleStillProcessingException(StillProcessingException stillProcessingException){
         log.error("resume exception has been thrown");
