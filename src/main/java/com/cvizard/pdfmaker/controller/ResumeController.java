@@ -6,14 +6,10 @@ import com.cvizard.pdfmaker.service.ResumeService;
 import com.itextpdf.text.DocumentException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
-import java.util.logging.Logger;
 
-import static com.cvizard.pdfmaker.model.ResumeStatus.ERROR;
-import static com.cvizard.pdfmaker.model.ResumeStatus.READY;
 
 @RestController
 @RequestMapping("/api/maker")
@@ -30,8 +26,8 @@ public class ResumeController {
             @RequestParam(name = "key") String key,
             @RequestParam("format") String fileFormat ) throws IOException, DocumentException {
 
-        Resume resume = resumeRepository.findById(key).orElse(Resume.builder().status(ERROR).build());
-        log.info("Resume: " + resume);
+        Resume resume = resumeRepository.findById(key).orElseThrow(() -> new RuntimeException("Resume not found"));
+        log.info("Resume found: " + resume);
         return resumeService.createResponse(resume, key, template, fileFormat);
     }
 }
