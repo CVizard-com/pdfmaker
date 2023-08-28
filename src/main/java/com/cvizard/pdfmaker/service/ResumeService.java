@@ -1,6 +1,9 @@
 package com.cvizard.pdfmaker.service;
 
 import com.cvizard.pdfmaker.client.GotenbergClient;
+import com.cvizard.pdfmaker.exceptions.BadFormatResumeException;
+import com.cvizard.pdfmaker.exceptions.NoResumeException;
+import com.cvizard.pdfmaker.exceptions.StillProcessingException;
 import com.cvizard.pdfmaker.model.Resume;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -9,10 +12,8 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.text.DocumentException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +28,6 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.*;
 import java.io.FileOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,18 +57,13 @@ public class ResumeService {
                 break;
             }
             case PROCESSING: {
-                log.info("Resume is processing");
-                responseEntity = ResponseEntity.status(102).body(null);
-                break;
+                throw new StillProcessingException();
             }
             case ERROR: {
-                log.error("Resume not found");
-                responseEntity = ResponseEntity.status(404).body(null);
-                break;
+                throw new NoResumeException();
             }
             default: {
-                responseEntity = ResponseEntity.status(422).body(null);
-                break;
+                throw new BadFormatResumeException();
             }
         }
         return responseEntity;
@@ -79,12 +74,19 @@ public class ResumeService {
         File file = new File("resources/" + key + "." + fileFormat);
         Resource resource = new FileSystemResource(file);
         HttpHeaders headers = new HttpHeaders();
+
         if (fileFormat.equals("pdf")) {
+
             headers.setContentType(MediaType.APPLICATION_PDF);
+
         } else if (fileFormat.equals("docx")) {
+
             headers.setContentType(MediaType.valueOf("application/vnd.openxmlformats-officedocument.wordprocessingml.document"));
         }
-        return ResponseEntity.status(200).headers(headers).body(resource);
+        return ResponseEntity
+                .status(200)
+                .headers(headers)
+                .body(resource);
     }
 
     public void createPdf(String key, Resume resume, String template) throws IOException, DocumentException {
