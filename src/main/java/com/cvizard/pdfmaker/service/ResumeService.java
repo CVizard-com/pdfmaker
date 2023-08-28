@@ -9,10 +9,8 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.text.DocumentException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -22,12 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.*;
 import java.io.FileOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,7 +35,6 @@ import java.util.Objects;
 public class ResumeService {
 
     private final SpringTemplateEngine templateEngine;
-    private final ITextRenderer renderer = new ITextRenderer();
     private final Context context = new Context();
 
     private final GotenbergClient gotenbergClient;
@@ -47,29 +42,19 @@ public class ResumeService {
     public ResponseEntity<?> createResponse(Resume resume, String key, String template, String fileFormat) throws DocumentException, IOException {
         ResponseEntity<?> responseEntity;
         switch (resume.getStatus()) {
-            case READY: {
-                log.info("Resume is ready");
+            case READY -> {
+                log.info("Resume is ready " + resume.getId());
                 createPdf(key, resume, template);
                 if (fileFormat.equals("docx")) {
                     createDocx(key);
                 }
                 responseEntity = getResponseEntity(key, fileFormat);
-                break;
             }
-            case PROCESSING: {
-                log.info("Resume is processing");
+            case PROCESSING -> {
+                log.info("Resume is processing "+ resume.getId());
                 responseEntity = ResponseEntity.status(102).body(null);
-                break;
             }
-            case ERROR: {
-                log.error("Resume not found");
-                responseEntity = ResponseEntity.status(404).body(null);
-                break;
-            }
-            default: {
-                responseEntity = ResponseEntity.status(422).body(null);
-                break;
-            }
+            default -> responseEntity = ResponseEntity.status(404).body(null);
         }
         return responseEntity;
     }
